@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Student Management</title>
+
+```
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Arial, Helvetica, sans-serif;
+        overflow: hidden;
+        background:
+            radial-gradient(circle at 15% 20%, rgba(59, 130, 246, 0.35), transparent 30%),
+            radial-gradient(circle at 85% 80%, rgba(139, 92, 246, 0.35), transparent 30%),
+            linear-gradient(135deg, #020617, #0f172a 45%, #172554);
+    }
+
+    .background {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        z-index: 0;
+    }
+
+    .circle {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(5px);
+        opacity: 0.5;
+        animation: float 8s ease-in-out infinite;
+    }
+
+    .circle.one {
+        width: 220px;
+        height: 220px;
+        background: #2563eb;
+        top: -70px;
+        left: -70px;
+    }
+
+    .circle.two {
+        width: 280px;
+        height: 280px;
+        background: #7c3aed;
+        right: -100px;
+        bottom: -100px;
+        animation-delay: 2s;
+    }
+
+    .circle.three {
+        width: 120px;
+        height: 120px;
+        background: #06b6d4;
+        right: 18%;
+        top: 12%;
+        animation-delay: 4s;
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translate(0, 0);
+        }
+
+        50% {
+            transform: translate(20px, -25px);
+        }
+    }
+
+    .login-box {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        max-width: 420px;
+        margin: 20px;
+        padding: 38px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 24px;
+        background: rgba(15, 23, 42, 0.72);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        box-shadow:
+            0 25px 70px rgba(0, 0, 0, 0.45),
+            inset 0 1px 1px rgba(255, 255, 255, 0.1);
+        animation: masuk 0.7s ease;
+    }
+
+    @keyframes masuk {
+        from {
+            opacity: 0;
+            transform: translateY(35px) scale(0.96);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    .icon {
+        width: 75px;
+        height: 75px;
+        margin: 0 auto 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 22px;
+        background: linear-gradient(135deg, #2563eb, #7c3aed);
+        color: white;
+        font-size: 34px;
+        box-shadow: 0 12px 30px rgba(37, 99, 235, 0.4);
+    }
+
+    h1 {
+        margin: 0;
+        text-align: center;
+        color: white;
+        font-size: 30px;
+        letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+        margin: 9px 0 30px;
+        text-align: center;
+        color: #94a3b8;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        color: #e2e8f0;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    input {
+        width: 100%;
+        padding: 14px 15px;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        border-radius: 12px;
+        outline: none;
+        background: rgba(255, 255, 255, 0.07);
+        color: white;
+        font-size: 14px;
+        transition: 0.25s;
+    }
+
+    input::placeholder {
+        color: #64748b;
+    }
+
+    input:focus {
+        border-color: #3b82f6;
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+    }
+
+    button {
+        width: 100%;
+        padding: 14px;
+        margin-top: 5px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #2563eb, #7c3aed);
+        color: white;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.25s;
+        box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 30px rgba(37, 99, 235, 0.45);
+    }
+
+    button:active {
+        transform: translateY(0);
+    }
+
+    button:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    #pesan {
+        min-height: 20px;
+        margin-top: 16px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .info {
+        margin-top: 25px;
+        padding: 13px;
+        border: 1px solid rgba(148, 163, 184, 0.12);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.04);
+        color: #64748b;
+        font-size: 12px;
+        text-align: center;
+        line-height: 1.5;
+    }
+
+    .footer {
+        margin-top: 20px;
+        text-align: center;
+        color: #475569;
+        font-size: 11px;
+    }
+
+    @media (max-width: 480px) {
+        .login-box {
+            padding: 30px 24px;
+        }
+
+        h1 {
+            font-size: 26px;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<div class="background">
+    <div class="circle one"></div>
+    <div class="circle two"></div>
+    <div class="circle three"></div>
+</div>
+
+<div class="login-box">
+
+    <div class="icon">
+        🔐
+    </div>
+
+    <h1>Selamat Datang</h1>
+
+    <p class="subtitle">
+        Login untuk mengakses<br>
+        Student Management System
+    </p>
+
+    <form id="formLogin">
+
+        <div class="form-group">
+            <label for="email">Email</label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Masukkan email kamu"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Masukkan password kamu"
+                required
+            >
+        </div>
+
+        <button type="submit" id="btnLogin">
+            Login
+        </button>
+
+    </form>
+
+    <div id="pesan"></div>
+
+    <div class="info">
+        🔒 Gunakan email dan password yang sudah terdaftar di database.
+    </div>
+
+    <div class="footer">
+        Student Management • Secure Login
+    </div>
+
+</div>
+
+<script>
+
+    // URL API untuk proses login
+    const API_LOGIN = "http://localhost:3000/api/users/login";
+
+    // Menjalankan proses ketika form login dikirim
+    document.getElementById("formLogin").addEventListener(
+        "submit",
+        async function(event) {
+
+            // Mencegah halaman melakukan refresh
+            event.preventDefault();
+
+            // Mengambil email dari input
+            const email = document.getElementById("email").value.trim();
+
+            // Mengambil password dari input
+            const password = document.getElementById("password").value;
+
+            // Mengambil tombol login
+            const btnLogin = document.getElementById("btnLogin");
+
+            // Mengambil elemen pesan
+            const pesan = document.getElementById("pesan");
+
+            // Menonaktifkan tombol saat proses berlangsung
+            btnLogin.disabled = true;
+
+            // Mengubah tulisan tombol
+            btnLogin.textContent = "Memproses...";
+
+            // Menghapus pesan sebelumnya
+            pesan.textContent = "";
+
+            try {
+
+                // Mengirim email dan password ke REST API
+                const response = await fetch(API_LOGIN, {
+                    method: "POST",
+
+                    // Memberitahu server bahwa data berupa JSON
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    // Mengubah data menjadi JSON
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                });
+
+                // Mengubah response API menjadi object JavaScript
+                const hasil = await response.json();
+
+                // Mengecek apakah login gagal
+                if (!response.ok) {
+
+                    // Menampilkan pesan error dari API
+                    throw new Error(
+                        hasil.message || "Login gagal"
+                    );
+                }
+
+                // Menyimpan token login
+                localStorage.setItem(
+                    "token",
+                    hasil.data.token
+                );
+
+                // Menyimpan informasi user
+                localStorage.setItem(
+                    "user",
+                    JSON.stringify({
+                        id: hasil.data.id,
+                        nama: hasil.data.nama,
+                        email: hasil.data.email
+                    })
+                );
+
+                // Mengubah warna pesan menjadi hijau
+                pesan.style.color = "#4ade80";
+
+                // Menampilkan pesan berhasil
+                pesan.textContent = "✓ Login berhasil!";
+
+                // Menunggu sebelum membuka halaman utama
+                setTimeout(function() {
+
+                    // Membuka halaman index
+                    window.location.href = "index.html";
+
+                }, 800);
+
+            } catch (error) {
+
+                // Menampilkan error di console
+                console.error(error);
+
+                // Mengubah warna pesan menjadi merah
+                pesan.style.color = "#f87171";
+
+                // Menampilkan pesan error
+                pesan.textContent = error.message;
+
+            } finally {
+
+                // Mengaktifkan kembali tombol
+                btnLogin.disabled = false;
+
+                // Mengembalikan tulisan tombol
+                btnLogin.textContent = "Login";
+            }
+        }
+    );
+
+</script>
+```
+
+</body>
+</html>
